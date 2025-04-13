@@ -12,6 +12,20 @@ app.get("/html", (req, res) => {
     return res.sendFile(path.join(__dirname, './html_files/index.html'));
 });
 
+app.get(
+    "/json", 
+    (req, res) => {
+    return res.json({ 
+        message: "Hello, world!",
+        status: 200,
+        data: {
+            name: "John Doe",
+            age: 30,
+            city: "New York"
+        }
+    });  }
+)
+
 
 app.listen(
     PORT, 
