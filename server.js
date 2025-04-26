@@ -26,6 +26,19 @@ app.get(
     });  }
 )
 
+app.get(
+    "/about", 
+    (req, res) => {
+    return res.json({ 
+        message: "Hello, about!",
+        status: 200,
+        data: {
+            name: "John Doe",
+            age: 30,
+            city: "New York"
+        }
+    });  }
+)
 
 app.listen(
     PORT, 
