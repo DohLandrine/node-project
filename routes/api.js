@@ -8,7 +8,15 @@ router.get('/ninjas', (request, respond) => {
 
 //add a new ninja to the db
 router.post('/ninjas', (request, respond) => {
-    respond.send( {type:'POST'}  )
+    console.log(request.body);
+    respond.send(
+        {
+            type: 'POST',
+            name: request.body.name,
+            rank: request.body.rank
+
+        });
+    //respond.send(  )
 });
 
 //update a ninja in the db

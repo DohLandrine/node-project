@@ -1,12 +1,16 @@
 const express = 
 require('express'); 
+const bodyParser = require('body-parser')
 
 
 const app = express(); 
 const PORT = 3000; 
 const path = require('path');
 
-// initialise routes
+//
+app.use(bodyParser.json());
+
+// initialise routes (middlewares)
 app.use('/api', require("./routes/api"));
 
 // listen for request
