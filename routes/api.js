@@ -1,32 +1,49 @@
 const express = require('express');
+const Ninja = require('../model/ninja');
 
 const router = express.Router();
 // get a list of ninjas from the db
-router.get('/ninjas', (request, respond) => {
+router.get('/ninjas', (request, respond, next) => {
     respond.send( {type:'GET'}  )
 });
 
 //add a new ninja to the db
-router.post('/ninjas', (request, respond) => {
-    console.log(request.body);
-    respond.send(
-        {
-            type: 'POST',
-            name: request.body.name,
-            rank: request.body.rank
+router.post('/ninjas', (request, respond, next) => {
+    // the parameter 'next' basically says I am done here, 
+    // now I want you to go to the next middleware.(For our)
+    // post, it's the middleware for error handling.
 
-        });
-    //respond.send(  )
+    // Creating a new collection with the requesst body.
+    Ninja.create(request.body).then(
+        function(ninja) {
+            respond.send(ninja);
+        }
+    ).catch(next); 
+    // if the Ninja.create fails, it runs
+    // whatever function in the catch();
 });
 
 //update a ninja in the db
-router.put('/ninjas/:id', (request, respond) => {
-    respond.send( {type:'PUT'}  )
+router.put('/ninjas/:id', (request, respond, next) => {
+    Ninja.findByIdAndUpdate({_id: request.params.id}, request.body).then(
+        ()=>{
+            Ninja.findById({_id : request.params.id}).then(
+                (ninja) => {
+                    respond.send(ninja);
+                }
+            ).catch(next);         
+        }
+    ).catch(next);
 });
 
 // delete a ninja from a db
-router.delete('/ninjas/:id', (request, respond) => {
-    respond.send( {type:'DELETE'}  )
+router.delete('/ninjas/:id', (request, respond, next) => {
+    Ninja.findByIdAndDelete({_id: request.params.id}).then(
+        function (ninja) {
+            respond.send(ninja)
+        }
+    ).catch(next);
 });
 
+// exporting our router   
 module.exports = router;
