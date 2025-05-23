@@ -24,7 +24,6 @@ This is a Node.js project that provides a RESTful API for managing ninjas with g
 
 ## Project Structure
 
-```
 node-project/
 ├── index.js               # Main entry point of the application
 ├── package.json           # Project metadata and dependencies
@@ -124,4 +123,3 @@ Doh Landrine
 ## License
 
 This project is licensed under the ISC License.
-```
